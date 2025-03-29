@@ -360,7 +360,7 @@ const BackgroundOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 50%; /* Only cover half the width */
   height: 100%;
   background-image: url('/images/book_background.jpg');
   background-size: cover;
@@ -368,6 +368,11 @@ const BackgroundOverlay = styled.div`
   background-attachment: fixed;
   opacity: 0.8;
   z-index: 1;
+  
+  @media (max-width: 1024px) {
+    width: 100%; /* On mobile, cover the full width */
+    height: 50%; /* But only half the height */
+  }
 `;
 
 const Navbar = styled.nav`
