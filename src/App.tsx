@@ -157,8 +157,10 @@ function App() {
     const y = e.clientY - box.top;
     const centerX = box.width / 2;
     const centerY = box.height / 2;
-    const rotateXVal = (y - centerY) / 10;
-    const rotateYVal = (centerX - x) / 10;
+    
+    // Inverting the direction and making movement more subtle and smoother
+    const rotateXVal = (centerY - y) / 15;
+    const rotateYVal = (x - centerX) / 15;
     
     setRotateX(rotateXVal);
     setRotateY(rotateYVal);
@@ -220,13 +222,21 @@ function App() {
             <HeroTagline>חווית למידה דיגיטלית מהפכנית</HeroTagline>
             <HeroTitle>לקרוא גרפים בקלות</HeroTitle>
             <HeroSubtitle>
-            עולם הבורסה והמסחר יכול להיראות מסובך ומאתגר למי שעושה את צעדיו הראשונים. מושגים חדשים, שוק הפכפך ומספרים שקופצים בין ירוק לאדום – כל אלו עשויים להרתיע את המתחילים, אך האמת היא שהבנת המסחר בבורסה אינה חייבת להיות משימה מסובכת.
-
-הספר *לקרוא גרפים בקלות* נכתב במיוחד עבור אלו שמחפשים גישה ברורה וידידותית לכניסה לעולם המסחר. המטרה שלי היא לפשט את התהליך ולהעניק לך את הכלים והידע הדרושים כדי לקרוא ולהבין גרפים, לזהות תבניות מסחר, ולהשתמש בכל אלו כדי לקבל החלטות מושכלות בשוק ההון.
-
-לא מדובר כאן במדריך מסובך המיועד למומחים, אלא בספר המכוון למתחילים שרוצים להכיר את היסודות בצורה פשוטה, מובנית ומעשית. לאורך הפרקים נעבור יחד דרך מושגים בסיסיים בגרפים, כיצד לקרוא אותם, אילו תבניות לחפש, ומהן האסטרטגיות הראשוניות שתוכל ליישם במסחר האישי שלך.
-
-המטרה שלי היא שעם סיום קריאת הספר, תוכל להרגיש ביטחון ביכולתך להבין את השוק ולקבל החלטות מסחר בצורה מושכלת ומדויקת יותר. בין אם אתה מחפש להתחיל מסחר כהשקעה לטווח ארוך או כמקור הכנסה נוסף, הכלים שתלמד כאן יסייעו לך לצעוד בבטחה לעולם זה.
+              <Paragraph>
+                עולם הבורסה והמסחר יכול להיראות מסובך ומאתגר למי שעושה את צעדיו הראשונים. מושגים חדשים, שוק הפכפך ומספרים שקופצים בין ירוק לאדום – כל אלו עשויים להרתיע את המתחילים, אך האמת היא שהבנת המסחר בבורסה אינה חייבת להיות משימה מסובכת.
+              </Paragraph>
+              
+              <Paragraph>
+                הספר <BookEmphasis>לקרוא גרפים בקלות</BookEmphasis> נכתב במיוחד עבור אלו שמחפשים גישה ברורה וידידותית לכניסה לעולם המסחר. המטרה שלי היא לפשט את התהליך ולהעניק לך את הכלים והידע הדרושים כדי לקרוא ולהבין גרפים, לזהות תבניות מסחר, ולהשתמש בכל אלו כדי לקבל החלטות מושכלות בשוק ההון.
+              </Paragraph>
+              
+              <Paragraph>
+                לא מדובר כאן במדריך מסובך המיועד למומחים, אלא בספר המכוון למתחילים שרוצים להכיר את היסודות בצורה פשוטה, מובנית ומעשית. לאורך הפרקים נעבור יחד דרך מושגים בסיסיים בגרפים, כיצד לקרוא אותם, אילו תבניות לחפש, ומהן האסטרטגיות הראשוניות שתוכל ליישם במסחר האישי שלך.
+              </Paragraph>
+              
+              <Paragraph>
+                המטרה שלי היא שעם סיום קריאת הספר, תוכל להרגיש ביטחון ביכולתך להבין את השוק ולקבל החלטות מסחר בצורה מושכלת ומדויקת יותר. בין אם אתה מחפש להתחיל מסחר כהשקעה לטווח ארוך או כמקור הכנסה נוסף, הכלים שתלמד כאן יסייעו לך לצעוד בבטחה לעולם זה.
+              </Paragraph>
             </HeroSubtitle>
             <ButtonGroup>
               <PrimaryButton as="a" href="#buy">
@@ -252,8 +262,6 @@ function App() {
           <BookCover style={{ 
             transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)` 
           }}>
-            <BookTitle>לקרוא גרפים בקלות</BookTitle>
-            <BookAuthor>המדריך המומחה שלך</BookAuthor>
           </BookCover>
           <BookShadow />
         </BookShowcase>
@@ -732,20 +740,23 @@ const HeroTitle = styled.h1`
   direction: rtl;
 `;
 
-const HeroSubtitle = styled.p`
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #666;
+const HeroSubtitle = styled.div`
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.7;
   margin-bottom: 2rem;
+  max-width: 800px;
   direction: rtl;
-  white-space: pre-line;
-  text-align: justify;
-  padding-left: 1.5rem;
-  
-  @media (max-width: 768px) {
-    padding-left: 0;
-    font-size: 1.1rem;
-  }
+`;
+
+const Paragraph = styled.p`
+  margin-bottom: 1.5rem;
+`;
+
+const BookEmphasis = styled.em`
+  font-style: italic;
+  font-weight: 600;
+  color: #ff9800;
 `;
 
 const ButtonGroup = styled.div`
@@ -779,17 +790,10 @@ const BookCover = styled.div`
   height: 550px;
   background: url('/images/book.jpg') center/cover;
   border-radius: 5px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
   position: relative;
-  padding: 2rem;
-  color: white;
-  text-align: center;
   transform-style: preserve-3d;
-  transition: transform 0.5s ease;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   
   &:hover {
     transform: translateZ(20px);
@@ -1048,11 +1052,11 @@ const PricingCard = styled(motion.div).attrs(() => ({
   viewport: { once: true, margin: "-100px" }
 }))`
   background: white;
-  padding: 3rem;
-  border-radius: 10px;
+  padding: 3.5rem;
+  border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1067,7 +1071,7 @@ const PricingCard = styled(motion.div).attrs(() => ({
     top: 0;
     left: 0;
     width: 100%;
-    height: 5px;
+    height: 6px;
     background: linear-gradient(90deg, #ff9800, #ffc107);
   }
 `;
@@ -1076,14 +1080,15 @@ const PriceHighlight = styled.div`
   background: linear-gradient(90deg, #ff9800, #ffc107);
   color: white;
   font-weight: 600;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 50px;
   display: inline-block;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
+  font-size: 1.1rem;
 `;
 
 const Price = styled.div`
-  font-size: 3rem;
+  font-size: 3.6rem;
   font-weight: 700;
   color: #333;
   margin-bottom: 0.5rem;
@@ -1091,18 +1096,21 @@ const Price = styled.div`
 
 const PriceDescription = styled.div`
   color: #666;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  font-size: 1.2rem;
 `;
 
 const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
 `;
 
 const FeatureItem = styled.li`
-  padding: 0.8rem 0;
+  padding: 1rem 0;
   border-bottom: 1px solid #eee;
+  font-size: 1.2rem;
   
   &:last-child {
     border-bottom: none;
@@ -1114,6 +1122,7 @@ const FeatureItem = styled.li`
     margin-right: 15px;
     padding-left: 15px;
     font-weight: bold;
+    font-size: 1.3rem;
   }
 `;
 
