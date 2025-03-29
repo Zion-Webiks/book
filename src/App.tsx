@@ -48,6 +48,23 @@ function App() {
   const [rotateX, setRotateX] = React.useState(0);
   const [rotateY, setRotateY] = React.useState(0);
   
+  // State for current slide
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [
+    '/images/slide1.jpg',
+    '/images/slide2.jpg',
+    '/images/slide3.jpg'
+  ];
+  
+  // Function to change slides every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [slides.length]);
+  
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const box = card.getBoundingClientRect();
@@ -225,6 +242,19 @@ function App() {
             רכישה מאובטחת
           </PrimaryButton>
         </PricingCard>
+        
+        <SlideShowCard>
+          <SlideImage src={slides[currentSlide]} alt={`תמונה ${currentSlide + 1}`} />
+          <SlidePagination>
+            {slides.map((_, index) => (
+              <SlideDot 
+                key={index} 
+                active={index === currentSlide}
+                onClick={() => setCurrentSlide(index)}
+              />
+            ))}
+          </SlidePagination>
+        </SlideShowCard>
       </PricingSection>
       
       {/* Trust Indicators */}
@@ -286,7 +316,8 @@ const AppContainer = styled.div`
   scroll-behavior: smooth;
   
   /* הגדרת משתנה גלובלי לרוחב הסקשנים */
-  --section-width: 1200px;
+  --section-width: 1500px;
+
   
   .icon-wrapper {
     margin-right: 0;
@@ -698,10 +729,13 @@ const TestimonialAuthor = styled.p`
 const PricingSection = styled.section`
   display: flex;
   justify-content: center;
+  gap: 2rem;
   padding: 2rem 4rem 4rem;
+  flex-wrap: wrap;
   
-  @media (max-width: 768px) {
-    padding: 2rem;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -720,6 +754,10 @@ const PricingCard = styled(motion.div).attrs(() => ({
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   
   &::before {
     content: '';
@@ -771,7 +809,8 @@ const FeatureItem = styled.li`
   &::before {
     content: '✓';
     color: #34a853;
-    margin-right: 8px;
+    margin-right: 15px;
+    padding-left: 15px;
     font-weight: bold;
   }
 `;
@@ -893,6 +932,60 @@ const IconWrapper = styled.span`
   justify-content: center;
   margin-right: 0;
   margin-left: 8px;
+`;
+
+const SlideShowCard = styled(motion.div).attrs(() => ({
+  initial: { opacity: 0, scale: 0.9 },
+  whileInView: { opacity: 1, scale: 1 },
+  transition: { duration: 0.5 },
+  viewport: { once: true, margin: "-100px" }
+}))`
+  background: white;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  
+  @media (max-width: 1024px) {
+    margin-top: 2rem;
+  }
+`;
+
+const SlideImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+`;
+
+const SlidePagination = styled.div`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  gap: 10px;
+  z-index: 10;
+`;
+
+const SlideDot = styled.button<{ active: boolean }>`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: ${props => props.active ? '#ff9800' : 'rgba(255, 255, 255, 0.7)'};
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 export default App;
