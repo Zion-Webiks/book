@@ -1,6 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+
+// Global styles for scrollbar
+const GlobalStyle = createGlobalStyle`
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #ff9800, #ffc107);
+    border-radius: 10px;
+    border: 2px solid #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #ff8100, #ffa000);
+  }
+`;
 
 // SVG Icons as React components
 const ShoppingCartIcon = () => (
@@ -175,6 +197,7 @@ function App() {
 
   return (
     <AppContainer dir="rtl">
+      <GlobalStyle />
       {/* Animated background */}
       <BackgroundAnimation />
       
@@ -743,7 +766,7 @@ const HeroTitle = styled.h1`
 const HeroSubtitle = styled.div`
   font-size: 1.1rem;
   color: #444;
-  line-height: 1.7;
+  line-height: 1.6;
   margin-bottom: 2rem;
   max-width: 800px;
   direction: rtl;
@@ -803,9 +826,9 @@ const BookCover = styled.div`
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
-    bottom: 0;
+    width: 100px;
+    height: 100px;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
     pointer-events: none;
   }
@@ -979,7 +1002,7 @@ const TestimonialDot = styled.button<{ active: boolean }>`
   transition: background 0.3s ease;
   
   &:hover {
-    background: ${props => props.active ? '#ff9800' : '#bdbdbd'};
+    transform: scale(1.2);
   }
 `;
 
