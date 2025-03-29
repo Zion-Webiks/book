@@ -33,6 +33,45 @@ const StarIcon = () => (
   </svg>
 );
 
+const ReturnIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+  </svg>
+);
+
+const InfoIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+  </svg>
+);
+
+const WhatsAppIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+  </svg>
+);
+
+const HomeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+    <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+  </svg>
+);
+
+const EmailIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+  </svg>
+);
+
 function App() {
   // Create refs for different sections for scrolling animations
   const heroRef = useRef<HTMLDivElement>(null);
@@ -84,6 +123,8 @@ function App() {
     setRotateY(0);
   };
 
+  const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
+
   return (
     <AppContainer dir="rtl">
       {/* Animated background */}
@@ -93,14 +134,17 @@ function App() {
       <Navbar>
         <Logo>לקרוא גרפים בקלות</Logo>
         <NavLinks>
+          <NavLink href="#">בית</NavLink>
           <NavLink href="#features">מאפיינים</NavLink>
           <NavLink href="#testimonials">המלצות</NavLink>
           <NavLink href="#pricing">מחיר</NavLink>
+          <NavLink href="#buy">הגנת הצרכן</NavLink>
+          <NavLink href="#contact">צור קשר</NavLink>
           <PrimaryButton as="a" href="#buy">
             <IconWrapper>
               <ShoppingCartIcon />
             </IconWrapper>
-            קנה עכשיו
+            רכישה מאובטחת
           </PrimaryButton>
         </NavLinks>
       </Navbar>
@@ -257,47 +301,200 @@ function App() {
       </PricingSection>
       
       {/* Trust Indicators */}
-      <TrustSection>
-        <TrustTitle>הגנה ללקוח</TrustTitle>
+      <TrustSection id="buy">
+        <SectionTitle>הגנה למען הצרכן</SectionTitle>
+        <TrustIntro>
+          אנו מחויבים להעניק לך חווית קנייה בטוחה, נוחה ומוגנת. כל המידע האישי שנמסר לנו נשמר בצורה מאובטחת, ואנו פועלים לפי כל התקנים והרגולציות על מנת להבטיח את זכויות הצרכן.
+        </TrustIntro>
+        
         <TrustItemsContainer>
-          <TrustItem>
-            <TrustIcon>
-              <LockIcon />
-            </TrustIcon>
-            <TrustText>אבטחת מידע ופרטיות</TrustText>
-          </TrustItem>
+          <TrustItemDetailed>
+            <TrustItemTitle>
+              <TrustIcon>
+                <LockIcon />
+              </TrustIcon>
+              1. אבטחת מידע ופרטיות
+            </TrustItemTitle>
+            <TrustItemDescription>
+              אנו מבינים את חשיבות פרטיות המידע שלך. כל המידע האישי שנמסר לנו נשמר בצורה מאובטחת באמצעי הצפנה מהמתקדמים ביותר. המידע לא יועבר לצדדים שלישיים, למעט במקרים שבהם החוק דורש זאת.
+            </TrustItemDescription>
+          </TrustItemDetailed>
           
-          <TrustItem>
-            <TrustIcon>
-              <BookIcon />
-            </TrustIcon>
-            <TrustText>רכישה והורדה של ספר דיגיטלי</TrustText>
-          </TrustItem>
+          <TrustItemDetailed>
+            <TrustItemTitle>
+              <TrustIcon>
+                <BookIcon />
+              </TrustIcon>
+              2. רכישה והורדה של ספר דיגיטלי
+            </TrustItemTitle>
+            <TrustItemDescription>
+              עם ביצוע רכישה של ספר דיגיטלי, תשלח אליך הודעת דוא"ל עם קישור להורדת הספר. מכיוון שמדובר במוצר דיגיטלי, אין אפשרות להחזרה או החלפה לאחר שהספר הורד למכשירך, אלא אם כן המוצר פגום, לא תואם את המפרט או קיימת תקלה טכנית.
+            </TrustItemDescription>
+          </TrustItemDetailed>
           
-          <TrustItem>
-            <TrustIcon>
-              <HeadsetIcon />
-            </TrustIcon>
-            <TrustText>שירות לקוחות</TrustText>
-          </TrustItem>
+          <TrustItemDetailed>
+            <TrustItemTitle>
+              <TrustIcon>
+                <ReturnIcon />
+              </TrustIcon>
+              3. החזרה של ספר דיגיטלי פגום
+            </TrustItemTitle>
+            <TrustItemDescription>
+              במקרה שבו הספר הדיגיטלי פגום, לא תואם לתיאור או שיש בעיה טכנית, תוכל לפנות אלינו תוך 14 ימים מיום הרכישה. לאחר קבלת פנייתך, אנו נבדוק את המקרה ונציע פתרון, שיכול לכלול החזר כספי או תיקון המוצר.
+            </TrustItemDescription>
+          </TrustItemDetailed>
+          
+          <TrustItemDetailed>
+            <TrustItemTitle>
+              <TrustIcon>
+                <InfoIcon />
+              </TrustIcon>
+              4. תנאים נוספים
+            </TrustItemTitle>
+            <TrustItemDescription>
+              ההזמנה שלך מותנית בהסכמה לתנאים המפורטים כאן. אנו ממליצים לעיין בתנאי השימוש לפני ביצוע הרכישה. כל רכישה מהווה הסכמה מלאה לתנאים אלה.
+            </TrustItemDescription>
+          </TrustItemDetailed>
         </TrustItemsContainer>
       </TrustSection>
       
       {/* Footer */}
-      <Footer>
-        <FooterContent>
-          <ContactInfo>
-            <ContactTitle>צור קשר</ContactTitle>
-            <ContactEmail href="mailto:contact@example.com">contact@example.com</ContactEmail>
-          </ContactInfo>
-          
-          <FooterLinks>
-            <FooterLink href="/privacy">מדיניות פרטיות</FooterLink>
-            <FooterLink href="/terms">תנאים והגבלות</FooterLink>
-          </FooterLinks>
-        </FooterContent>
-        <Copyright> {new Date().getFullYear()} לקרוא גרפים בקלות. כל הזכויות שמורות.</Copyright>
+      <Footer id="contact">
+        <FooterContainer>
+          <FooterContent>
+            {/* Footer Part 1: Text */}
+            <FooterSection className="contact-section">
+              <ContactTitle>צור קשר</ContactTitle>
+              <ContactText>
+                שירות הלקוחות שלנו זמין עבורך לכל שאלה או בעיה הקשורה לרכישת הספרים הדיגיטליים שלנו. תוכל לפנות אלינו בכתובת דוא"ל:
+              </ContactText>
+              <ContactEmail href="mailto:pashut.likro.graphs@gmail.com">pashut.likro.graphs@gmail.com</ContactEmail>
+              <ContactText>
+                ואנו נעשה כמיטב יכולתנו להיענות לפנייתך בהקדם.
+              </ContactText>
+            </FooterSection>
+            
+            {/* Footer Part 2: Social Icons */}
+            <FooterSection className="social">
+              <ContactTitle>עקבו אחרינו</ContactTitle>
+              <SocialLinks>
+                <SocialLink href="https://www.facebook.com/share/18tSNLwcem/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <FacebookIcon />
+                </SocialLink>
+                <SocialLink href="https://wa.me/%D7%9E%D7%A1%D7%A4%D7%A8%20%D7%94%D7%A0%D7%99%D7%99%D7%93%20%D7%A9%D7%9C%D7%9A,%20%D7%9B%D7%9E%D7%A1%D7%A4%D7%A8%20%D7%91%D7%99%D7%A0%D7%9C%D7%90%D7%95%D7%9E%D7%99,%20%D7%A8%D7%A7%20%D7%A1%D7%A4%D7%A8%D7%95%D7%AA" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                  <WhatsAppIcon />
+                </SocialLink>
+                <SocialLink href="#" aria-label="Home">
+                  <HomeIcon />
+                </SocialLink>
+                <SocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
+                  <EmailIcon />
+                </SocialLink>
+              </SocialLinks>
+            </FooterSection>
+            
+            {/* Footer Part 3: Terms & Links */}
+            <FooterSection>
+              <ContactTitle>מידע נוסף</ContactTitle>
+              <FooterLinks>
+                <FooterLink href="#" onClick={(e) => {
+                  e.preventDefault();
+                  setIsPrivacyPolicyOpen(true);
+                }}>מדיניות פרטיות</FooterLink>
+              </FooterLinks>
+            </FooterSection>
+          </FooterContent>
+          <Copyright> {new Date().getFullYear()} לקרוא גרפים בקלות. כל הזכויות שמורות.</Copyright>
+        </FooterContainer>
       </Footer>
+
+      {/* Privacy Policy Modal */}
+      {isPrivacyPolicyOpen && (
+        <PrivacyPolicyModal>
+          <PrivacyPolicyContent>
+            <PrivacyPolicyCloseButton onClick={() => setIsPrivacyPolicyOpen(false)}>×</PrivacyPolicyCloseButton>
+            <PrivacyPolicyTitle>מדיניות פרטיות</PrivacyPolicyTitle>
+            <PrivacyPolicyDate>תאריך עדכון אחרון: 29 במרץ 2025</PrivacyPolicyDate>
+            
+            <PrivacyPolicyText>
+              מדיניות פרטיות זו מתארת את המדיניות והנהלים שלנו בנוגע לאיסוף, שימוש וחשיפה של המידע שלך בעת השימוש בשירות, ומסבירה לך על זכויות הפרטיות שלך וכיצד החוק מגן עליך.
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyText>
+              אנו משתמשים בנתונים האישיים שלך כדי לספק ולשפר את השירות. בשימושך בשירות, את/ה מסכים/ה לאיסוף ולשימוש במידע בהתאם למדיניות פרטיות זו. מדיניות פרטיות זו נוצרה בעזרת מחולל מדיניות הפרטיות החינמית (Free Privacy Policy Generator).
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyHeading>פרשנות והגדרות</PrivacyPolicyHeading>
+            <PrivacyPolicySubHeading>פרשנות</PrivacyPolicySubHeading>
+            <PrivacyPolicyText>
+              המילים שהאות הראשונה שלהן היא באות גדולה מקבלות משמעות המוגדרת בתנאים הבאים. ההגדרות הבאות יישאו את אותה משמעות בין אם הן מופיעות ביחיד או ברבים.
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicySubHeading>הגדרות</PrivacyPolicySubHeading>
+            <PrivacyPolicyText>
+              לצורך מדיניות פרטיות זו:
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyList>
+              <PrivacyPolicyListItem>"חשבון" פירושו חשבון ייחודי שנוצר עבורך לצורך גישה לשירות שלנו או לחלקים ממנו.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"שותף" (Affiliate) פירושו גוף השולט ב-, נשלט על ידי או נמצא בשליטה משותפת עם צד מסוים, כאשר "שליטה" משמעה בעלות של 50% או יותר ממניות, אחזקות הון או ניירות ערך אחרים המזכים בהצבעה לבחירת דירקטורים או רשות ניהול אחרת.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"החברה" (המתייחסת הן כ"החברה", "אנו", "לנו" או "שלנו" בהסכם זה) מתייחסת ללקרוא גרפים בקלת.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"עוגיות" (Cookies) הן קבצים קטנים הממוקמים במחשב שלך, במכשיר הנייד או בכל מכשיר אחר, על ידי אתר אינטרנט, המכילים מידע על היסטוריית הגלישה שלך באתר זה בין שימושים שונים.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"ארץ" מתייחסת ל: ישראל.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"מכשיר" פירושו כל מכשיר שיכול לגשת לשירות, כגון מחשב, טלפון סלולרי או טאבלט.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"נתונים אישיים" פירושו כל מידע המתייחס לאדם מזוהה או שניתן לזהותו.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"שירות" מתייחס לאתר האינטרנט.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"ספק שירות" פירושו כל אדם טבעי או משפטי המעבד נתונים מטעם החברה. הכוונה היא לחברות צד שלישי או אנשים שהחברה מעסיקה כדי להקל על מתן השירות, לספק את השירות מטעם החברה, לבצע שירותים הקשורים לשירות או לסייע לחברה בניתוח כיצד נעשה שימוש בשירות.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"נתוני שימוש" הם נתונים הנאספים באופן אוטומטי, או שנוצרים בעקבות השימוש בשירות או מתשתית השירות עצמה (לדוגמה, משך זמן ביקור בעמוד).</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"אתר האינטרנט" מתייחס ללקרוא גרפים בקלת, הנגיש בכתובת https://lp.vp4.me/1obe.</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>"את/ה" פירושו האדם הגולש או משתמש בשירות, או החברה או כל גוף משפטי אחר מטעם אותו אדם הניגש או משתמש בשירות, לפי העניין.</PrivacyPolicyListItem>
+            </PrivacyPolicyList>
+            
+            <PrivacyPolicyHeading>איסוף והשימוש בנתונים האישיים שלך</PrivacyPolicyHeading>
+            <PrivacyPolicySubHeading>סוגי נתונים שנאספים</PrivacyPolicySubHeading>
+            <PrivacyPolicyText>
+              <strong>נתונים אישיים</strong><br />
+              בעת השימוש בשירות שלנו, ייתכן שנבקש ממך לספק לנו מידע אישי מסוים הניתן לזיהוי, אשר יכול לשמש ליצירת קשר או זיהויך. מידע המאפשר זיהוי אישי עשוי לכלול, בין היתר:
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyList>
+              <PrivacyPolicyListItem>כתובת דוא"ל</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>שם פרטי ושם משפחה</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>מספר טלפון</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>כתובת, מדינה, מחוז, מיקוד/קוד דואר, עיר</PrivacyPolicyListItem>
+              <PrivacyPolicyListItem>נתוני שימוש</PrivacyPolicyListItem>
+            </PrivacyPolicyList>
+            
+            <PrivacyPolicyText>
+              <strong>נתוני שימוש</strong><br />
+              נתוני שימוש נאספים באופן אוטומטי בעת השימוש בשירות.
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyText>
+              נתוני שימוש עשויים לכלול מידע כגון כתובת פרוטוקול האינטרנט של המכשיר שלך (למשל כתובת IP), סוג הדפדפן, גרסת הדפדפן, העמודים בשירות שלנו שבהם את/ה מבקר/ת, זמן ותאריך הביקור שלך, משך הזמן ששהית בעמודים אלו, מזהים ייחודיים של המכשיר ונתוני אבחון אחרים.
+            </PrivacyPolicyText>
+
+            <PrivacyPolicyText>
+              כאשר את/ה ניגש/ת לשירות דרך או באמצעות מכשיר נייד, אנו עשויים לאסוף מידע מסוים באופן אוטומטי, כולל, אך לא מוגבל ל: סוג המכשיר הנייד שבו את/ה משתמש/ת, מזהה ייחודי של המכשיר הנייד שלך, כתובת ה-IP של המכשיר הנייד שלך, מערכת ההפעלה הניידת שלך, סוג דפדפן האינטרנט הנייד שבו את/ה משתמש/ת, מזהים ייחודיים של המכשיר ונתוני אבחון אחרים.
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyText>
+              אנו עשויים גם לאסוף מידע ששולח הדפדפן שלך בכל פעם שאת/ה מבקר/ת בשירות שלנו או כשאת/ה ניגש/ת לשירות דרך או באמצעות מכשיר נייד.
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicySubHeading>טכנולוגיות מעקב ועוגיות</PrivacyPolicySubHeading>
+            <PrivacyPolicyText>
+              אנו משתמשים בעוגיות ובטכנולוגיות מעקב דומות כדי לעקוב אחר הפעילות בשירות שלנו ולאחסן מידע מסוים. טכנולוגיות מעקב בהן אנו משתמשים כוללות משואות רשת (Beacons), תגים (Tags) וסקריפטים (Scripts) לצורך איסוף ומעקב אחר מידע וכדי לשפר ולנתח את השירות שלנו.
+            </PrivacyPolicyText>
+            
+            <PrivacyPolicyContactInfo>
+              <strong>צור/י קשר</strong><br />
+              אם יש לך שאלות כלשהן בנוגע למדיניות פרטיות זו, באפשרותך ליצור עמנו קשר:<br />
+              על ידי ביקור בעמוד זה באתר האינטרנט שלנו: https://lp.vp4.me/1obe
+            </PrivacyPolicyContactInfo>
+          </PrivacyPolicyContent>
+        </PrivacyPolicyModal>
+      )}
     </AppContainer>
   );
 }
@@ -567,7 +764,7 @@ const BookCover = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
     pointer-events: none;
   }
   
@@ -847,98 +1044,157 @@ const FeatureItem = styled.li`
 `;
 
 const TrustSection = styled.section`
-  background: white;
-  padding: 4rem;
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    padding: 2rem;
-  }
+  padding: 5rem 2rem;
+  background-color: #f9f9f9;
+  text-align: right;
 `;
 
-const TrustTitle = styled.h3`
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: #333;
+const TrustIntro = styled.p`
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+  text-align: right;
 `;
 
 const TrustItemsContainer = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 4rem;
+  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1500px;
+  margin: 0 auto;
 `;
 
-const TrustItem = styled.div`
+const TrustItemDetailed = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1;
+  min-width: 280px;
+  max-width: calc(50% - 1rem);
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+`;
+
+const TrustItemTitle = styled.h3`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  max-width: 200px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+`;
+
+const TrustItemDescription = styled.p`
+  color: #666;
+  line-height: 1.6;
+  padding-right: 2rem;
 `;
 
 const TrustIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  background: #fff8e1;
-  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
-  color: #ff9800;
-  font-size: 1.2rem;
-`;
-
-const TrustText = styled.p`
-  font-size: 1rem;
-  color: #666;
+  background-color: #f0f8ff;
+  border-radius: 50%;
+  margin-left: 1rem;
+  color: #0066cc;
 `;
 
 const Footer = styled.footer`
-  background: #263238;
+  background-color: #263238;
   color: white;
-  padding: 4rem;
-  
-  @media (max-width: 768px) {
-    padding: 2rem;
-  }
+  padding: 3rem 0 1rem;
+  text-align: right;
+`;
+
+const FooterContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 `;
 
 const FooterContent = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 8rem;
+
   
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
   }
 `;
 
-const ContactInfo = styled.div`
-  max-width: 300px;
-`;
-
-const ContactTitle = styled.h4`
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-`;
-
-const ContactEmail = styled.a`
-  color: #aaa;
-  text-decoration: none;
+const FooterSection = styled.div`
+  flex: 1;
+  min-width: 250px;
+  padding: 0 1rem;
   
-  &:hover {
-    color: white;
+  &.contact-section {
+    flex: 2;
+    max-width: 45%;
+  }
+  
+  &.social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    &.contact-section {
+      flex: 1;
+      max-width: 100%;
+    }
+    
+    &.social {
+      align-items: flex-start;
+      text-align: right;
+      border-right: none;
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem 0;
+      margin: 0;
+    }
+  }
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+  
+  @media (max-width: 768px) {
+    justify-content: flex-start;
   }
 `;
 
 const FooterLinks = styled.div`
   display: flex;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const FooterLink = styled.a`
@@ -963,6 +1219,24 @@ const IconWrapper = styled.span`
   justify-content: center;
   margin-right: 0;
   margin-left: 8px;
+`;
+
+const SocialLink = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: #ff9800;
+    color: white;
+    transform: translateY(-3px);
+  }
 `;
 
 const SlideShowCard = styled(motion.div).attrs(() => ({
@@ -1017,6 +1291,126 @@ const SlideDot = styled.button<{ active: boolean }>`
   &:hover {
     transform: scale(1.2);
   }
+`;
+
+const ContactTitle = styled.h4`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
+`;
+
+const ContactText = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+`;
+
+const ContactEmail = styled.a`
+  color: #ff9800;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const PrivacyPolicyModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto;
+  direction: rtl;
+`;
+
+const PrivacyPolicyContent = styled.div`
+  background-color: white;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+`;
+
+const PrivacyPolicyCloseButton = styled.button`
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+  &:hover {
+    color: black;
+  }
+`;
+
+const PrivacyPolicyTitle = styled.h2`
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-align: center;
+`;
+
+const PrivacyPolicyDate = styled.p`
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 2rem;
+  text-align: center;
+`;
+
+const PrivacyPolicyHeading = styled.h3`
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+`;
+
+const PrivacyPolicySubHeading = styled.h4`
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.5rem;
+  color: #444;
+`;
+
+const PrivacyPolicyText = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #555;
+`;
+
+const PrivacyPolicyList = styled.ul`
+  margin: 1rem 2rem;
+  padding: 0;
+`;
+
+const PrivacyPolicyListItem = styled.li`
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  color: #555;
+`;
+
+const PrivacyPolicyContactInfo = styled.div`
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  text-align: center;
 `;
 
 export default App;
