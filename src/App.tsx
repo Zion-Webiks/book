@@ -133,7 +133,7 @@ function App() {
       {/* Navigation */}
       <Navbar>
         <LogoContainer>
-          <Logo>לקרוא גרפים בקלות</Logo>
+          <Logo href="#">לקרוא גרפים בקלות</Logo>
           <HeaderSocialContainer>
             <HeaderSocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
               <HeaderSocialIcon src="/images/email.png" alt="Email" />
@@ -151,7 +151,7 @@ function App() {
           <NavLink href="#features">מאפיינים</NavLink>
           <NavLink href="#testimonials">המלצות</NavLink>
           <NavLink href="#pricing">מחיר</NavLink>
-          <NavLink href="#buy">הגנת הצרכן</NavLink>
+          <NavLink href="#contact">הגנת הצרכן</NavLink>
           <NavLink href="#contact">צור קשר</NavLink>
           <PrimaryButton as="a" href="#buy">
             <IconWrapper>
@@ -573,7 +573,7 @@ const BackgroundOverlay = styled.div`
   width: 45%; /* Only cover half the width */
   height: 75%;
   background-image: url('/images/book_background.jpg');
-  
+  border-radius: 10px;
   background-size: 50%;
   background-position: left;
   background-attachment: fixed;
