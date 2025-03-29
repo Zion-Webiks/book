@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
@@ -101,7 +101,7 @@ function App() {
             <HeroSubtitle>
             עולם הבורסה והמסחר יכול להיראות מסובך ומאתגר למי שעושה את צעדיו הראשונים. מושגים חדשים, שוק הפכפך ומספרים שקופצים בין ירוק לאדום – כל אלו עשויים להרתיע את המתחילים, אך האמת היא שהבנת המסחר בבורסה אינה חייבת להיות משימה מסובכת.
 
-הספר * לקרוא גרפים בקלות * נכתב במיוחד עבור אלו שמחפשים גישה ברורה וידידותית לכניסה לעולם המסחר. המטרה שלי היא לפשט את התהליך ולהעניק לך את הכלים והידע הדרושים כדי לקרוא ולהבין גרפים, לזהות תבניות מסחר, ולהשתמש בכל אלו כדי לקבל החלטות מושכלות בשוק ההון.
+הספר *לקרוא גרפים בקלות* נכתב במיוחד עבור אלו שמחפשים גישה ברורה וידידותית לכניסה לעולם המסחר. המטרה שלי היא לפשט את התהליך ולהעניק לך את הכלים והידע הדרושים כדי לקרוא ולהבין גרפים, לזהות תבניות מסחר, ולהשתמש בכל אלו כדי לקבל החלטות מושכלות בשוק ההון.
 
 לא מדובר כאן במדריך מסובך המיועד למומחים, אלא בספר המכוון למתחילים שרוצים להכיר את היסודות בצורה פשוטה, מובנית ומעשית. לאורך הפרקים נעבור יחד דרך מושגים בסיסיים בגרפים, כיצד לקרוא אותם, אילו תבניות לחפש, ומהן האסטרטגיות הראשוניות שתוכל ליישם במסחר האישי שלך.
 
@@ -142,6 +142,9 @@ function App() {
       
       {/* Features Section */}
       <SectionTitle id="features">מאפייני הספר</SectionTitle>
+      <FeaturesImageContainer>
+        <FeaturesImage src="/images/book_features.jpg" alt="מאפייני הספר" />
+      </FeaturesImageContainer>
       <FeaturesSection ref={featuresRef}>
         <FeatureCard>
           <FeatureIcon>
@@ -279,6 +282,11 @@ const AppContainer = styled.div`
   color: #333;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   text-align: right;
+  scroll-padding-top: 100px;
+  scroll-behavior: smooth;
+  
+  /* הגדרת משתנה גלובלי לרוחב הסקשנים */
+  --section-width: 1200px;
   
   .icon-wrapper {
     margin-right: 0;
@@ -328,15 +336,16 @@ const Navbar = styled.nav`
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  height: 70px;
 `;
 
 const Logo = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
-  color: #4285f4;
+  color: #ff9800;
 `;
 
 const NavLinks = styled.div`
@@ -356,7 +365,7 @@ const NavLink = styled.a`
   transition: color 0.2s ease;
   
   &:hover {
-    color: #4285f4;
+    color: #ff9800;
   }
 `;
 
@@ -365,7 +374,7 @@ const PrimaryButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(90deg, #4285f4, #34a853);
+  background: linear-gradient(90deg, #ff9800, #ffc107);
   color: white;
   border: none;
   border-radius: 50px;
@@ -376,17 +385,17 @@ const PrimaryButton = styled(motion.button)`
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
   }
 `;
 
 const SecondaryButton = styled(PrimaryButton)`
   background: transparent;
-  border: 2px solid #4285f4;
-  color: #4285f4;
+  border: 2px solid #ff9800;
+  color: #ff9800;
   
   &:hover {
-    background: rgba(66, 133, 244, 0.1);
+    background: rgba(255, 152, 0, 0.1);
   }
 `;
 
@@ -395,7 +404,7 @@ const HeroSection = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6rem 4rem 4rem;
+  padding: 8rem 4rem 4rem;
   
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -407,12 +416,14 @@ const HeroSection = styled.section`
 const HeroContent = styled.div`
   flex: 1;
   max-width: 600px;
+  padding-right: 2rem;
+  margin-right: 2rem;
 `;
 
 const HeroTagline = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
-  color: #4285f4;
+  color: #ff9800;
   margin-bottom: 1rem;
   direction: rtl;
 `;
@@ -421,7 +432,7 @@ const HeroTitle = styled.h1`
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 1.5rem;
-  background: linear-gradient(90deg, #4285f4, #34a853);
+  background: linear-gradient(90deg, #ff9800, #ffc107);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.2;
@@ -430,10 +441,18 @@ const HeroTitle = styled.h1`
 
 const HeroSubtitle = styled.p`
   font-size: 1.2rem;
-  line-height: 1.6;
+  line-height: 1.8;
   color: #666;
   margin-bottom: 2rem;
   direction: rtl;
+  white-space: pre-line;
+  text-align: justify;
+  padding-left: 1.5rem;
+  
+  @media (max-width: 768px) {
+    padding-left: 0;
+    font-size: 1.1rem;
+  }
 `;
 
 const ButtonGroup = styled.div`
@@ -459,9 +478,9 @@ const BookShowcase = styled.div`
 `;
 
 const BookCover = styled.div`
-  width: 300px;
-  height: 420px;
-  background: linear-gradient(135deg, #4285f4, #34a853);
+  width: 340px;
+  height: 460px;
+  background: linear-gradient(135deg, #ff9800, #ffc107);
   border-radius: 5px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -488,6 +507,11 @@ const BookCover = styled.div`
     bottom: 0;
     background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
     pointer-events: none;
+  }
+  
+  @media (max-width: 1024px) {
+    width: 320px;
+    height: 440px;
   }
 `;
 
@@ -518,18 +542,66 @@ const SectionTitle = styled.h2`
   font-weight: 700;
   margin: 4rem 0 2rem;
   color: #333;
-  padding-top: 2rem;
+  padding-top: 6rem;
+  margin-top: -2rem;
+  position: relative;
+  z-index: 1;
+  
+  &:before {
+    content: '';
+    display: block;
+    height: 80px;
+    margin: -80px 0 0;
+    position: relative;
+    z-index: -1;
+  }
+`;
+
+const FeaturesImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto 3rem;
+  width: 100%;
+  max-width: var(--section-width);
+  padding: 0 2rem;
+  position: relative;
+  overflow: hidden;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.1));
+    border-radius: 12px;
+    z-index: -1;
+  }
+`;
+
+const FeaturesImage = styled.img`
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(255, 152, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  object-fit: cover;
+  max-height: 400px;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(255, 152, 0, 0.2);
+  }
 `;
 
 const FeaturesSection = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  padding: 2rem 4rem 4rem;
-  
-  @media (max-width: 768px) {
-    padding: 2rem;
-  }
+  padding: 2rem;
+  max-width: var(--section-width);
+  margin: 0 auto;
 `;
 
 const FeatureCard = styled(motion.div).attrs(() => ({
@@ -553,7 +625,7 @@ const FeatureCard = styled(motion.div).attrs(() => ({
 const FeatureIcon = styled.div`
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #4285f4, #34a853);
+  background: linear-gradient(135deg, #ff9800, #ffc107);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -580,11 +652,9 @@ const TestimonialsSection = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  padding: 2rem 4rem 4rem;
-  
-  @media (max-width: 768px) {
-    padding: 2rem;
-  }
+  padding: 2rem;
+  max-width: var(--section-width);
+  margin: 0 auto;
 `;
 
 const TestimonialCard = styled(motion.div).attrs(() => ({
@@ -607,7 +677,7 @@ const QuoteMark = styled.div`
   top: -20px;
   left: 10px;
   opacity: 0.1;
-  color: #4285f4;
+  color: #ff9800;
   font-family: Georgia, serif;
 `;
 
@@ -622,7 +692,7 @@ const TestimonialText = styled.p`
 
 const TestimonialAuthor = styled.p`
   font-weight: 600;
-  color: #4285f4;
+  color: #ff9800;
 `;
 
 const PricingSection = styled.section`
@@ -658,12 +728,12 @@ const PricingCard = styled(motion.div).attrs(() => ({
     left: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, #4285f4, #34a853);
+    background: linear-gradient(90deg, #ff9800, #ffc107);
   }
 `;
 
 const PriceHighlight = styled.div`
-  background: linear-gradient(90deg, #4285f4, #34a853);
+  background: linear-gradient(90deg, #ff9800, #ffc107);
   color: white;
   font-weight: 600;
   padding: 0.5rem 1rem;
@@ -740,13 +810,13 @@ const TrustItem = styled.div`
 const TrustIcon = styled.div`
   width: 50px;
   height: 50px;
-  background: #f5f7fa;
+  background: #fff8e1;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
-  color: #4285f4;
+  color: #ff9800;
   font-size: 1.2rem;
 `;
 
