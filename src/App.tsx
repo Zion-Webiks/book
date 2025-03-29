@@ -132,7 +132,20 @@ function App() {
       
       {/* Navigation */}
       <Navbar>
-        <Logo>לקרוא גרפים בקלות</Logo>
+        <LogoContainer>
+          <Logo>לקרוא גרפים בקלות</Logo>
+          <HeaderSocialContainer>
+            <HeaderSocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
+              <HeaderSocialIcon src="/images/email.png" alt="Email" />
+            </HeaderSocialLink>
+            <HeaderSocialLink href="https://wa.me/972123456789" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <HeaderSocialIcon src="/images/whatsapp.png" alt="WhatsApp" />
+            </HeaderSocialLink>
+            <HeaderSocialLink href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <HeaderSocialIcon src="/images/facebook.png" alt="Facebook" />
+            </HeaderSocialLink>
+          </HeaderSocialContainer>
+        </LogoContainer>
         <NavLinks>
           <NavLink href="#">בית</NavLink>
           <NavLink href="#features">מאפיינים</NavLink>
@@ -378,17 +391,17 @@ function App() {
             <FooterSection className="social">
               <ContactTitle>עקבו אחרינו</ContactTitle>
               <SocialLinks>
-                <SocialLink href="https://www.facebook.com/share/18tSNLwcem/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <FacebookIcon />
+                <SocialLink href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <SocialIcon src="/images/facebook.png" alt="Facebook" />
                 </SocialLink>
-                <SocialLink href="https://wa.me/%D7%9E%D7%A1%D7%A4%D7%A8%20%D7%94%D7%A0%D7%99%D7%99%D7%93%20%D7%A9%D7%9C%D7%9A,%20%D7%9B%D7%9E%D7%A1%D7%A4%D7%A8%20%D7%91%D7%99%D7%A0%D7%9C%D7%90%D7%95%D7%9E%D7%99,%20%D7%A8%D7%A7%20%D7%A1%D7%A4%D7%A8%D7%95%D7%AA" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                  <WhatsAppIcon />
-                </SocialLink>
-                <SocialLink href="#" aria-label="Home">
-                  <HomeIcon />
+                <SocialLink href="https://wa.me/972123456789" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                  <SocialIcon src="/images/whatsapp.png" alt="WhatsApp" />
                 </SocialLink>
                 <SocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
-                  <EmailIcon />
+                  <SocialIcon src="/images/email.png" alt="Email" />
+                </SocialLink>
+                <SocialLink href="/" aria-label="Home">
+                  <SocialIcon src="/images/home.png" alt="Home" />
                 </SocialLink>
               </SocialLinks>
             </FooterSection>
@@ -577,7 +590,7 @@ const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -589,10 +602,16 @@ const Navbar = styled.nav`
   height: 70px;
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Logo = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   color: #ff9800;
+  margin-left: 1rem;
 `;
 
 const NavLinks = styled.div`
@@ -1213,6 +1232,34 @@ const Copyright = styled.div`
   padding-top: 2rem;
 `;
 
+const HeaderSocialContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-right: 0;
+  margin-right: 2rem;
+  
+  @media (max-width: 968px) {
+    display: none;
+  }
+`;
+
+const HeaderSocialLink = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const HeaderSocialIcon = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
 const IconWrapper = styled.span`
   display: inline-flex;
   align-items: center;
@@ -1236,6 +1283,16 @@ const SocialLink = styled.a`
     background-color: #ff9800;
     color: white;
     transform: translateY(-3px);
+  }
+`;
+
+const SocialIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.2);
   }
 `;
 
