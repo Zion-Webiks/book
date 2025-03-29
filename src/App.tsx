@@ -95,6 +95,52 @@ function App() {
     '/images/slide3.jpg'
   ];
   
+  // State for testimonials slideshow
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const testimonials = [
+    {
+      text: "הספר הזה שינה לגמרי את ההבנה שלי של ויזואליזציה של נתונים. אני יכול כעת לנתח בביטחון כל גרף או תרשים שאני נתקל בו.",
+      author: "דוד כ."
+    },
+    {
+      text: "כסטודנטית שמתקשה בסטטיסטיקה, המדריך הזה היה בדיוק מה שהייתי צריכה. הסברים ברורים ודוגמאות מעשיות עשו את כל ההבדל.",
+      author: "שרה מ."
+    },
+    {
+      text: "משאב מדהים גם למתחילים וגם לקוראים מתקדמים. הפורמט הדיגיטלי מקל על המעקב והתרגול.",
+      author: "מיכאל ת."
+    },
+    {
+      text: "הספר עזר לי להבין לעומק את הגרפים בעבודת המחקר שלי. היכולת לזהות טרנדים ולהסיק מסקנות השתפרה פלאים.",
+      author: "רונית ל."
+    },
+    {
+      text: "לימדתי את הילדים שלי איך לקרוא גרפים באמצעות השיטות בספר. עכשיו הם יכולים להבין בקלות את המידע שמוצג בחדשות ובספרי הלימוד.",
+      author: "יעקב ג."
+    }
+  ];
+
+  // Calculate maximum testimonial index
+  const maxTestimonialIndex = Math.max(0, testimonials.length - 3);
+
+  // Function to change slides every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [slides.length]);
+  
+  // Function to change testimonials every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => Math.min(maxTestimonialIndex, prev + 1));
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [testimonials.length, maxTestimonialIndex]);
+  
   // Function to change slides every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -133,7 +179,7 @@ function App() {
       {/* Navigation */}
       <Navbar>
         <LogoContainer>
-          <Logo href="#">לקרוא גרפים בקלות</Logo>
+          <Logo>לקרוא גרפים בקלות</Logo>
           <HeaderSocialContainer>
             <HeaderSocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
               <HeaderSocialIcon src="/images/email.png" alt="Email" />
@@ -253,29 +299,38 @@ function App() {
       {/* Testimonials Section */}
       <SectionTitle id="testimonials">מה הקוראים אומרים</SectionTitle>
       <TestimonialsSection ref={testimonialsRef}>
-        <TestimonialCard>
-          <QuoteMark>"</QuoteMark>
-          <TestimonialText>
-            הספר הזה שינה לגמרי את ההבנה שלי של ויזואליזציה של נתונים. אני יכול כעת לנתח בביטחון כל גרף או תרשים שאני נתקל בו.
-          </TestimonialText>
-          <TestimonialAuthor>דוד כ.</TestimonialAuthor>
-        </TestimonialCard>
+        <TestimonialsContainer>
+          {[0, 1, 2].map(offset => {
+            const index = currentTestimonial + offset;
+            if (index >= testimonials.length) return null;
+            
+            return (
+              <TestimonialCard
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <QuoteMark>"</QuoteMark>
+                <TestimonialText>
+                  {testimonials[index].text}
+                </TestimonialText>
+                <TestimonialAuthor>{testimonials[index].author}</TestimonialAuthor>
+              </TestimonialCard>
+            );
+          })}
+        </TestimonialsContainer>
         
-        <TestimonialCard>
-          <QuoteMark>"</QuoteMark>
-          <TestimonialText>
-            כסטודנטית שמתקשה בסטטיסטיקה, המדריך הזה היה בדיוק מה שהייתי צריכה. הסברים ברורים ודוגמאות מעשיות עשו את כל ההבדל.
-          </TestimonialText>
-          <TestimonialAuthor>שרה מ.</TestimonialAuthor>
-        </TestimonialCard>
-        
-        <TestimonialCard>
-          <QuoteMark>"</QuoteMark>
-          <TestimonialText>
-            משאב מדהים גם למתחילים וגם לקוראים מתקדמים. הפורמט הדיגיטלי מקל על המעקב והתרגול.
-          </TestimonialText>
-          <TestimonialAuthor>מיכאל ת.</TestimonialAuthor>
-        </TestimonialCard>
+        <TestimonialPagination>
+          {Array.from({ length: maxTestimonialIndex + 1 }).map((_, index) => (
+            <TestimonialDot 
+              key={index} 
+              active={index === currentTestimonial}
+              onClick={() => setCurrentTestimonial(index)}
+            />
+          ))}
+        </TestimonialPagination>
       </TestimonialsSection>
       
       {/* Pricing Section */}
@@ -437,34 +492,6 @@ function App() {
               אנו משתמשים בנתונים האישיים שלך כדי לספק ולשפר את השירות. בשימושך בשירות, את/ה מסכים/ה לאיסוף ולשימוש במידע בהתאם למדיניות פרטיות זו. מדיניות פרטיות זו נוצרה בעזרת מחולל מדיניות הפרטיות החינמית (Free Privacy Policy Generator).
             </PrivacyPolicyText>
             
-            <PrivacyPolicyHeading>פרשנות והגדרות</PrivacyPolicyHeading>
-            <PrivacyPolicySubHeading>פרשנות</PrivacyPolicySubHeading>
-            <PrivacyPolicyText>
-              המילים שהאות הראשונה שלהן היא באות גדולה מקבלות משמעות המוגדרת בתנאים הבאים. ההגדרות הבאות יישאו את אותה משמעות בין אם הן מופיעות ביחיד או ברבים.
-            </PrivacyPolicyText>
-            
-            <PrivacyPolicySubHeading>הגדרות</PrivacyPolicySubHeading>
-            <PrivacyPolicyText>
-              לצורך מדיניות פרטיות זו:
-            </PrivacyPolicyText>
-            
-            <PrivacyPolicyList>
-              <PrivacyPolicyListItem>"חשבון" פירושו חשבון ייחודי שנוצר עבורך לצורך גישה לשירות שלנו או לחלקים ממנו.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"שותף" (Affiliate) פירושו גוף השולט ב-, נשלט על ידי או נמצא בשליטה משותפת עם צד מסוים, כאשר "שליטה" משמעה בעלות של 50% או יותר ממניות, אחזקות הון או ניירות ערך אחרים המזכים בהצבעה לבחירת דירקטורים או רשות ניהול אחרת.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"החברה" (המתייחסת הן כ"החברה", "אנו", "לנו" או "שלנו" בהסכם זה) מתייחסת ללקרוא גרפים בקלת.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"עוגיות" (Cookies) הן קבצים קטנים הממוקמים במחשב שלך, במכשיר הנייד או בכל מכשיר אחר, על ידי אתר אינטרנט, המכילים מידע על היסטוריית הגלישה שלך באתר זה בין שימושים שונים.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"ארץ" מתייחסת ל: ישראל.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"מכשיר" פירושו כל מכשיר שיכול לגשת לשירות, כגון מחשב, טלפון סלולרי או טאבלט.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"נתונים אישיים" פירושו כל מידע המתייחס לאדם מזוהה או שניתן לזהותו.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"שירות" מתייחס לאתר האינטרנט.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"ספק שירות" פירושו כל אדם טבעי או משפטי המעבד נתונים מטעם החברה. הכוונה היא לחברות צד שלישי או אנשים שהחברה מעסיקה כדי להקל על מתן השירות, לספק את השירות מטעם החברה, לבצע שירותים הקשורים לשירות או לסייע לחברה בניתוח כיצד נעשה שימוש בשירות.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"נתוני שימוש" הם נתונים הנאספים באופן אוטומטי, או שנוצרים בעקבות השימוש בשירות או מתשתית השירות עצמה (לדוגמה, משך זמן ביקור בעמוד).</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"אתר האינטרנט" מתייחס ללקרוא גרפים בקלת, הנגיש בכתובת https://lp.vp4.me/1obe.</PrivacyPolicyListItem>
-              <PrivacyPolicyListItem>"את/ה" פירושו האדם הגולש או משתמש בשירות, או החברה או כל גוף משפטי אחר מטעם אותו אדם הניגש או משתמש בשירות, לפי העניין.</PrivacyPolicyListItem>
-            </PrivacyPolicyList>
-            
-            <PrivacyPolicyHeading>איסוף והשימוש בנתונים האישיים שלך</PrivacyPolicyHeading>
-            <PrivacyPolicySubHeading>סוגי נתונים שנאספים</PrivacyPolicySubHeading>
             <PrivacyPolicyText>
               <strong>נתונים אישיים</strong><br />
               בעת השימוש בשירות שלנו, ייתכן שנבקש ממך לספק לנו מידע אישי מסוים הניתן לזיהוי, אשר יכול לשמש ליצירת קשר או זיהויך. מידע המאפשר זיהוי אישי עשוי לכלול, בין היתר:
@@ -481,14 +508,6 @@ function App() {
             <PrivacyPolicyText>
               <strong>נתוני שימוש</strong><br />
               נתוני שימוש נאספים באופן אוטומטי בעת השימוש בשירות.
-            </PrivacyPolicyText>
-            
-            <PrivacyPolicyText>
-              נתוני שימוש עשויים לכלול מידע כגון כתובת פרוטוקול האינטרנט של המכשיר שלך (למשל כתובת IP), סוג הדפדפן, גרסת הדפדפן, העמודים בשירות שלנו שבהם את/ה מבקר/ת, זמן ותאריך הביקור שלך, משך הזמן ששהית בעמודים אלו, מזהים ייחודיים של המכשיר ונתוני אבחון אחרים.
-            </PrivacyPolicyText>
-
-            <PrivacyPolicyText>
-              כאשר את/ה ניגש/ת לשירות דרך או באמצעות מכשיר נייד, אנו עשויים לאסוף מידע מסוים באופן אוטומטי, כולל, אך לא מוגבל ל: סוג המכשיר הנייד שבו את/ה משתמש/ת, מזהה ייחודי של המכשיר הנייד שלך, כתובת ה-IP של המכשיר הנייד שלך, מערכת ההפעלה הניידת שלך, סוג דפדפן האינטרנט הנייד שבו את/ה משתמש/ת, מזהים ייחודיים של המכשיר ונתוני אבחון אחרים.
             </PrivacyPolicyText>
             
             <PrivacyPolicyText>
@@ -927,26 +946,62 @@ const FeatureDescription = styled.p`
 `;
 
 const TestimonialsSection = styled.section`
+  max-width: var(--section-width);
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+`;
+
+const TestimonialsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  padding: 2rem;
-  max-width: var(--section-width);
-  margin: 0 auto;
 `;
 
-const TestimonialCard = styled(motion.div).attrs(() => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-  viewport: { once: true, margin: "-100px" }
-}))`
+const TestimonialPagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 8px;
+`;
+
+const TestimonialDot = styled.button<{ active: boolean }>`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: ${props => props.active ? '#ff9800' : '#e0e0e0'};
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  
+  &:hover {
+    background: ${props => props.active ? '#ff9800' : '#bdbdbd'};
+  }
+`;
+
+const TestimonialCard = styled(motion.div)`
   background: white;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(66, 133, 244, 0.15);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, transparent 50%, rgba(255, 152, 0, 0.1) 50%);
+  }
 `;
 
 const QuoteMark = styled.div`
