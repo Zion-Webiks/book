@@ -358,13 +358,14 @@ const BackgroundAnimation = styled.div`
 
 const BackgroundOverlay = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%; /* Only cover half the width */
-  height: 100%;
+  top: 15%;
+  left: 5%;
+  width: 45%; /* Only cover half the width */
+  height: 75%;
   background-image: url('/images/book_background.jpg');
-  background-size: cover;
-  background-position: center;
+  
+  background-size: 50%;
+  background-position: left;
   background-attachment: fixed;
   opacity: 0.8;
   z-index: 1;
@@ -470,6 +471,7 @@ const HeroContent = styled.div`
   position: relative;
   z-index: 5;
   padding-left: 2rem;
+  margin-right: 5%; /* Move content 5% to the left */
   height: 100%;
   display: flex;
   flex-direction: column;
