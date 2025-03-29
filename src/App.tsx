@@ -106,7 +106,8 @@ function App() {
       </Navbar>
       
       {/* Hero Section */}
-      <HeroSection ref={heroRef}>
+      <HeroSection>
+        <BackgroundOverlay />
         <HeroContent>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -141,15 +142,13 @@ function App() {
           </motion.div>
         </HeroContent>
         
-        <BookShowcase
+        <BookShowcase 
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          style={{
-            transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-            transition: 'transform 0.1s ease'
-          }}
         >
-          <BookCover>
+          <BookCover style={{ 
+            transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)` 
+          }}>
             <BookTitle>לקרוא גרפים בקלות</BookTitle>
             <BookAuthor>המדריך המומחה שלך</BookAuthor>
           </BookCover>
@@ -357,6 +356,20 @@ const BackgroundAnimation = styled.div`
   }
 `;
 
+const BackgroundOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/book_background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.8;
+  z-index: 1;
+`;
+
 const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -431,24 +444,31 @@ const SecondaryButton = styled(PrimaryButton)`
 `;
 
 const HeroSection = styled.section`
-  min-height: 100vh;
+  position: relative;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8rem 4rem 4rem;
+  padding: 6rem 3rem 4rem;
+  overflow: hidden;
   
   @media (max-width: 1024px) {
     flex-direction: column;
     text-align: center;
     gap: 4rem;
+    padding: 4rem 2rem;
   }
 `;
 
 const HeroContent = styled.div`
-  flex: 1;
-  max-width: 600px;
-  padding-right: 2rem;
-  margin-right: 2rem;
+  flex: 0.9;
+  position: relative;
+  z-index: 5;
+  padding-left: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const HeroTagline = styled.div`
@@ -497,26 +517,30 @@ const ButtonGroup = styled.div`
 `;
 
 const BookShowcase = styled.div`
-  flex: 1;
+  flex: 1.1;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px;
+  position: relative;
+  z-index: 5;
+  height: 100%;
+  padding: 2rem;
   
   @media (max-width: 1024px) {
     width: 100%;
+    margin-top: 1rem;
   }
 `;
 
 const BookCover = styled.div`
-  width: 340px;
-  height: 460px;
-  background: linear-gradient(135deg, #ff9800, #ffc107);
+  width: 400px;
+  height: 550px;
+  background: url('/images/book.jpg') center/cover;
   border-radius: 5px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
   padding: 2rem;
@@ -541,8 +565,8 @@ const BookCover = styled.div`
   }
   
   @media (max-width: 1024px) {
-    width: 320px;
-    height: 440px;
+    width: 350px;
+    height: 500px;
   }
 `;
 
