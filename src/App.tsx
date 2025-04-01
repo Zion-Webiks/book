@@ -4,23 +4,38 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 
 // Global styles for scrollbar
 const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Assistant', sans-serif;
+    color: #333;
+    overflow-x: hidden;
+    line-height: 1.5;
+    
+    @media (max-width: 768px) {
+      font-size: 14px; /* Reduce base font size on mobile */
+    }
+  }
+  
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
   }
-
+  
   ::-webkit-scrollbar-track {
-    background: #f5f5f5;
-    border-radius: 10px;
+    background: #f1f1f1;
   }
-
+  
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #ff9800, #ffc107);
-    border-radius: 10px;
-    border: 2px solid #f5f5f5;
+    background: #ff9800;
+    border-radius: 4px;
   }
-
+  
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, #ff8100, #ffa000);
+    background: #e68a00;
   }
 `;
 
@@ -204,7 +219,9 @@ function App() {
       {/* Navigation */}
       <Navbar>
         <LogoContainer>
-          <Logo>לקרוא גרפים בקלות</Logo>
+          <DesktopOnly>
+            <Logo>לקרוא גרפים בקלות</Logo>
+          </DesktopOnly>
           <HeaderSocialContainer>
             <HeaderSocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
               <HeaderSocialIcon src={`${process.env.PUBLIC_URL}/images/email.png`} alt="Email" />
@@ -219,10 +236,16 @@ function App() {
         </LogoContainer>
         <NavLinks>
           <NavLink href="#">בית</NavLink>
-          <NavLink href="#features">מאפיינים</NavLink>
-          <NavLink href="#testimonials">המלצות</NavLink>
+          <DesktopOnly>
+            <NavLink href="#features">מאפיינים</NavLink>
+          </DesktopOnly>
+          <DesktopOnly>
+            <NavLink href="#testimonials">המלצות</NavLink>
+          </DesktopOnly>
           <NavLink href="#pricing">מחיר</NavLink>
-          <NavLink href="#contact">הגנת הצרכן</NavLink>
+          <DesktopOnly>
+            <NavLink href="#contact">הגנת הצרכן</NavLink>
+          </DesktopOnly>
           <NavLink href="#contact">צור קשר</NavLink>
           <PrimaryButton as="a" href="#buy">
             <IconWrapper>
@@ -252,14 +275,15 @@ function App() {
               <Paragraph>
                 הספר <BookEmphasis>לקרוא גרפים בקלות</BookEmphasis> נכתב במיוחד עבור אלו שמחפשים גישה ברורה וידידותית לכניסה לעולם המסחר. המטרה שלי היא לפשט את התהליך ולהעניק לך את הכלים והידע הדרושים כדי לקרוא ולהבין גרפים, לזהות תבניות מסחר, ולהשתמש בכל אלו כדי לקבל החלטות מושכלות בשוק ההון.
               </Paragraph>
-              
-              <Paragraph>
-                לא מדובר כאן במדריך מסובך המיועד למומחים, אלא בספר המכוון למתחילים שרוצים להכיר את היסודות בצורה פשוטה, מובנית ומעשית. לאורך הפרקים נעבור יחד דרך מושגים בסיסיים בגרפים, כיצד לקרוא אותם, אילו תבניות לחפש, ומהן האסטרטגיות הראשוניות שתוכל ליישם במסחר האישי שלך.
-              </Paragraph>
-              
-              <Paragraph>
-                המטרה שלי היא שעם סיום קריאת הספר, תוכל להרגיש ביטחון ביכולתך להבין את השוק ולקבל החלטות מסחר בצורה מושכלת ומדויקת יותר. בין אם אתה מחפש להתחיל מסחר כהשקעה לטווח ארוך או כמקור הכנסה נוסף, הכלים שתלמד כאן יסייעו לך לצעוד בבטחה לעולם זה.
-              </Paragraph>
+              <DesktopOnly>
+                <Paragraph>
+                  לא מדובר כאן במדריך מסובך המיועד למומחים, אלא בספר המכוון למתחילים שרוצים להכיר את היסודות בצורה פשוטה, מובנית ומעשית. לאורך הפרקים נעבור יחד דרך מושגים בסיסיים בגרפים, כיצד לקרוא אותם, אילו תבניות לחפש, ומהן האסטרטגיות הראשוניות שתוכל ליישם במסחר האישי שלך.
+                </Paragraph>
+                
+                <Paragraph>
+                  המטרה שלי היא שעם סיום קריאת הספר, תוכל להרגיש ביטחון ביכולתך להבין את השוק ולקבל החלטות מסחר בצורה מושכלת ומדויקת יותר. בין אם אתה מחפש להתחיל מסחר כהשקעה לטווח ארוך או כמקור הכנסה נוסף, הכלים שתלמד כאן יסייעו לך לצעוד בבטחה לעולם זה.
+                </Paragraph>
+              </DesktopOnly>
             </HeroSubtitle>
             <ButtonGroup>
               <PrimaryButton as="a" href="#buy">
@@ -633,6 +657,8 @@ const BackgroundOverlay = styled.div`
   @media (max-width: 1024px) {
     width: 100%; /* On mobile, cover the full width */
     height: 50%; /* But only half the height */
+    top: 50%; /* Move down on mobile */
+    background-size: 150%; /* Larger background image on mobile */
   }
 `;
 
@@ -662,6 +688,10 @@ const Logo = styled.div`
   font-weight: 700;
   color: #ff9800;
   margin-left: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const NavLinks = styled.div`
@@ -682,6 +712,10 @@ const NavLink = styled.a`
   
   &:hover {
     color: #ff9800;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -715,6 +749,12 @@ const SecondaryButton = styled(PrimaryButton)`
   }
 `;
 
+const DesktopOnly = styled.span`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 const HeroSection = styled.section`
   position: relative;
   height: 100vh;
@@ -745,11 +785,15 @@ const HeroContent = styled.div`
 `;
 
 const HeroTagline = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: #ff9800;
   margin-bottom: 1rem;
   direction: rtl;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -761,19 +805,34 @@ const HeroTitle = styled.h1`
   -webkit-text-fill-color: transparent;
   line-height: 1.2;
   direction: rtl;
+  
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+    margin-bottom: 0.8rem;
+  }
 `;
 
 const HeroSubtitle = styled.div`
-  font-size: 1.1rem;
-  color: #444;
+  font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 2rem;
   max-width: 800px;
   direction: rtl;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const Paragraph = styled.p`
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 0.7rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const BookEmphasis = styled.em`
@@ -805,6 +864,8 @@ const BookShowcase = styled.div`
   @media (max-width: 1024px) {
     width: 100%;
     margin-top: 1rem;
+    height: 300px; /* Reduced height */
+    padding: 0.5rem; /* Less padding */
   }
 `;
 
@@ -813,51 +874,33 @@ const BookCover = styled.div`
   height: 550px;
   background: url('${process.env.PUBLIC_URL}/images/book.jpg') center/cover;
   border-radius: 5px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-  position: relative;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-out;
   transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  
-  &:hover {
-    transform: translateZ(20px);
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-    pointer-events: none;
-  }
+  position: relative;
   
   @media (max-width: 1024px) {
-    width: 350px;
-    height: 500px;
+    width: 200px;  /* Smaller width for mobile */
+    height: 270px; /* Maintain aspect ratio */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
-`;
-
-const BookTitle = styled.h3`
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-`;
-
-const BookAuthor = styled.p`
-  font-size: 1rem;
-  opacity: 0.8;
 `;
 
 const BookShadow = styled.div`
   position: absolute;
-  width: 260px;
+  bottom: -10px;
+  width: 300px;
   height: 40px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
   filter: blur(15px);
   transform: translateY(210px);
+  
+  @media (max-width: 1024px) {
+    width: 150px; /* Smaller shadow */
+    height: 20px;
+    transform: translateY(130px); /* Adjust position */
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -878,6 +921,11 @@ const SectionTitle = styled.h2`
     margin: -80px 0 0;
     position: relative;
     z-index: -1;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
@@ -964,12 +1012,21 @@ const FeatureTitle = styled.h3`
   font-weight: 600;
   margin-bottom: 1rem;
   color: #333;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
 `;
 
 const FeatureDescription = styled.p`
-  font-size: 1rem;
-  line-height: 1.6;
   color: #666;
+  line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
 `;
 
 const TestimonialsSection = styled.section`
@@ -989,17 +1046,17 @@ const TestimonialPagination = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 2rem;
-  gap: 8px;
+  gap: 10px;
 `;
 
 const TestimonialDot = styled.button<{ active: boolean }>`
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: ${props => props.active ? '#ff9800' : '#e0e0e0'};
+  background: ${props => props.active ? '#ff9800' : 'rgba(255, 255, 255, 0.7)'};
   border: none;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   
   &:hover {
     transform: scale(1.2);
@@ -1048,11 +1105,20 @@ const TestimonialText = styled.p`
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 1;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const TestimonialAuthor = styled.p`
   font-weight: 600;
   color: #ff9800;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const PricingSection = styled.section`
@@ -1102,50 +1168,65 @@ const PricingCard = styled(motion.div).attrs(() => ({
 const PriceHighlight = styled.div`
   background: linear-gradient(90deg, #ff9800, #ffc107);
   color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border-radius: 50px;
-  display: inline-block;
-  margin-bottom: 1.8rem;
   font-size: 1.1rem;
+  display: inline-block;
+  
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    padding: 0.3rem 1rem;
+  }
 `;
 
 const Price = styled.div`
-  font-size: 3.6rem;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 0.5rem;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ff9800;
+  margin: 1rem 0;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin: 0.7rem 0;
+  }
 `;
 
 const PriceDescription = styled.div`
-  color: #666;
-  margin-bottom: 2.5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
-  margin-bottom: 2.5rem;
-  width: 100%;
+  margin-bottom: 2rem;
 `;
 
 const FeatureItem = styled.li`
-  padding: 1rem 0;
-  border-bottom: 1px solid #eee;
-  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
   
-  &:last-child {
-    border-bottom: none;
+  &:before {
+    content: '✓';
+    display: inline-block;
+    margin-left: 0.5rem;
+    color: #4caf50;
+    font-weight: bold;
   }
   
-  &::before {
-    content: '✓';
-    color: #34a853;
-    margin-right: 15px;
-    padding-left: 15px;
-    font-weight: bold;
-    font-size: 1.3rem;
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -1309,6 +1390,10 @@ const FooterLink = styled.a`
   
   &:hover {
     color: white;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
   }
 `;
 
