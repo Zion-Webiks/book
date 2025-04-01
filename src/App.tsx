@@ -112,9 +112,9 @@ function App() {
   // State for current slide
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
-    '/images/slide1.jpg',
-    '/images/slide2.jpg',
-    '/images/slide3.jpg'
+    `${process.env.PUBLIC_URL}/images/slide1.jpg`,
+    `${process.env.PUBLIC_URL}/images/slide2.jpg`,
+    `${process.env.PUBLIC_URL}/images/slide3.jpg`
   ];
   
   // State for testimonials slideshow
@@ -207,13 +207,13 @@ function App() {
           <Logo>לקרוא גרפים בקלות</Logo>
           <HeaderSocialContainer>
             <HeaderSocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
-              <HeaderSocialIcon src="/images/email.png" alt="Email" />
+              <HeaderSocialIcon src={`${process.env.PUBLIC_URL}/images/email.png`} alt="Email" />
             </HeaderSocialLink>
             <HeaderSocialLink href="https://wa.me/972123456789" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-              <HeaderSocialIcon src="/images/whatsapp.png" alt="WhatsApp" />
+              <HeaderSocialIcon src={`${process.env.PUBLIC_URL}/images/whatsapp.png`} alt="WhatsApp" />
             </HeaderSocialLink>
             <HeaderSocialLink href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <HeaderSocialIcon src="/images/facebook.png" alt="Facebook" />
+              <HeaderSocialIcon src={`${process.env.PUBLIC_URL}/images/facebook.png`} alt="Facebook" />
             </HeaderSocialLink>
           </HeaderSocialContainer>
         </LogoContainer>
@@ -293,7 +293,7 @@ function App() {
       {/* Features Section */}
       <SectionTitle id="features">מאפייני הספר</SectionTitle>
       <FeaturesImageContainer>
-        <FeaturesImage src="/images/book_features.jpg" alt="מאפייני הספר" />
+        <FeaturesImage src={`${process.env.PUBLIC_URL}/images/book_features.jpg`} alt="מאפייני הספר" />
       </FeaturesImageContainer>
       <FeaturesSection ref={featuresRef}>
         <FeatureCard>
@@ -478,16 +478,16 @@ function App() {
               <ContactTitle>עקבו אחרינו</ContactTitle>
               <SocialLinks>
                 <SocialLink href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <SocialIcon src="/images/facebook.png" alt="Facebook" />
+                  <SocialIcon src={`${process.env.PUBLIC_URL}/images/facebook.png`} alt="Facebook" />
                 </SocialLink>
                 <SocialLink href="https://wa.me/972123456789" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                  <SocialIcon src="/images/whatsapp.png" alt="WhatsApp" />
+                  <SocialIcon src={`${process.env.PUBLIC_URL}/images/whatsapp.png`} alt="WhatsApp" />
                 </SocialLink>
                 <SocialLink href="mailto:pashut.likro.graphs@gmail.com" aria-label="Email">
-                  <SocialIcon src="/images/email.png" alt="Email" />
+                  <SocialIcon src={`${process.env.PUBLIC_URL}/images/email.png`} alt="Email" />
                 </SocialLink>
                 <SocialLink href="/" aria-label="Home">
-                  <SocialIcon src="/images/home.png" alt="Home" />
+                  <SocialIcon src={`${process.env.PUBLIC_URL}/images/home.png`} alt="Home" />
                 </SocialLink>
               </SocialLinks>
             </FooterSection>
@@ -622,7 +622,7 @@ const BackgroundOverlay = styled.div`
   left: 5%;
   width: 45%; /* Only cover half the width */
   height: 75%;
-  background-image: url('/images/book_background.jpg');
+  background-image: url('${process.env.PUBLIC_URL}/images/book_background.jpg');
   border-radius: 10px;
   background-size: 50%;
   background-position: left;
@@ -811,7 +811,7 @@ const BookShowcase = styled.div`
 const BookCover = styled.div`
   width: 400px;
   height: 550px;
-  background: url('/images/book.jpg') center/cover;
+  background: url('${process.env.PUBLIC_URL}/images/book.jpg') center/cover;
   border-radius: 5px;
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
   position: relative;
