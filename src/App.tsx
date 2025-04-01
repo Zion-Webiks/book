@@ -4,13 +4,22 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 
 // Global styles for scrollbar
 const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  :root {
+    --section-width: 1200px;
+    --primary-color: #ff9800;
+    --secondary-color: #ffc107;
+    --neutral-light: #f5f5f5;
+    --text-color: #333333;
+    --text-light: #666666;
+  }
+  
+  html {
+    scroll-behavior: smooth; /* Enable smooth scrolling */
   }
   
   body {
+    margin: 0;
+    padding: 0;
     font-family: 'Assistant', sans-serif;
     color: #333;
     overflow-x: hidden;
@@ -48,7 +57,7 @@ const ShoppingCartIcon = () => (
 
 const BookIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.287-.81-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
   </svg>
 );
 
@@ -123,7 +132,161 @@ function App() {
   // Book tilt animation on mouse move
   const [rotateX, setRotateX] = React.useState(0);
   const [rotateY, setRotateY] = React.useState(0);
+  const [scaleValue, setScale] = React.useState(1);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const bookShowcaseRef = useRef<HTMLDivElement>(null);
+  const touchVelocityRef = useRef({ x: 0, y: 0 });
+  const previousTouchRef = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<number | null>(null);
   
+  // Check if device is mobile on component mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // Handle touch movement on mobile
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!bookShowcaseRef.current) return;
+    setIsInteracting(true);
+    
+    // Cancel any ongoing animations
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+    
+    const touch = e.touches[0];
+    previousTouchRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    };
+    
+    // Slightly scale up the book on touch to provide visual feedback
+    setScale(1.05);
+  };
+  
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!bookShowcaseRef.current || !isInteracting) return;
+    e.preventDefault(); // Prevent scrolling while interacting
+    
+    const touch = e.touches[0];
+    const box = bookShowcaseRef.current.getBoundingClientRect();
+    const centerX = box.width / 2;
+    const centerY = box.height / 2;
+    
+    // Calculate touch position relative to center
+    const touchX = touch.clientX - box.left;
+    const touchY = touch.clientY - box.top;
+    
+    // Calculate velocity for inertia effect
+    touchVelocityRef.current = {
+      x: touch.clientX - previousTouchRef.current.x,
+      y: touch.clientY - previousTouchRef.current.y
+    };
+    
+    previousTouchRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    };
+    
+    // Calculate rotation based on the distance from center with increased sensitivity
+    const rotateYValue = ((touchX - centerX) / (centerX * 0.75)) * 35; // More sensitive
+    const rotateXValue = ((touchY - centerY) / (centerY * 0.75)) * 35 * -1; // More sensitive
+    
+    setRotateY(rotateYValue);
+    setRotateX(rotateXValue);
+  };
+  
+  const handleTouchEnd = () => {
+    setIsInteracting(false);
+    
+    // Use velocity for inertia effect
+    const initialVelocityX = touchVelocityRef.current.x * 0.5; // Dampen velocity
+    const initialVelocityY = touchVelocityRef.current.y * -0.5; // Invert Y and dampen
+    let velocityX = initialVelocityX;
+    let velocityY = initialVelocityY;
+    let currentRotateX = rotateX;
+    let currentRotateY = rotateY;
+    let currentScale = scaleValue;
+    
+    // Reset scale back to normal
+    setScale(1);
+    
+    // Gradually return to original position with inertia
+    const resetAnimation = () => {
+      // Apply velocity with friction
+      currentRotateX += velocityY;
+      currentRotateY += velocityX;
+      velocityX *= 0.95; // Apply friction
+      velocityY *= 0.95; // Apply friction
+      
+      // Spring back to center
+      currentRotateX *= 0.9;
+      currentRotateY *= 0.9;
+      
+      // Scale animation
+      currentScale = 1 + (currentScale - 1) * 0.9;
+      
+      // Update state
+      setRotateX(currentRotateX);
+      setRotateY(currentRotateY);
+      
+      // Continue animation until mostly settled
+      if (Math.abs(currentRotateX) > 0.1 || 
+          Math.abs(currentRotateY) > 0.1 || 
+          Math.abs(velocityX) > 0.1 || 
+          Math.abs(velocityY) > 0.1) {
+        animationRef.current = requestAnimationFrame(resetAnimation);
+      } else {
+        // Final reset to exact zero
+        setRotateX(0);
+        setRotateY(0);
+      }
+    };
+    
+    animationRef.current = requestAnimationFrame(resetAnimation);
+  };
+  
+  // Clean up any animations on unmount
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return; // Skip on mobile as we use touch instead
+    
+    const element = e.currentTarget;
+    const { width, height } = element.getBoundingClientRect();
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const mouseX = e.clientX - element.getBoundingClientRect().left;
+    const mouseY = e.clientY - element.getBoundingClientRect().top;
+    
+    const rotateYValue = ((mouseX - centerX) / centerX) * 15; // -15 to +15 degrees
+    const rotateXValue = ((mouseY - centerY) / centerY) * 15 * -1; // +15 to -15 degrees
+    
+    setRotateY(rotateYValue);
+    setRotateX(rotateXValue);
+  };
+  
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setRotateX(0);
+      setRotateY(0);
+    }
+  };
+
   // State for current slide
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
@@ -187,27 +350,6 @@ function App() {
     return () => clearInterval(interval);
   }, [slides.length]);
   
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    const box = card.getBoundingClientRect();
-    const x = e.clientX - box.left;
-    const y = e.clientY - box.top;
-    const centerX = box.width / 2;
-    const centerY = box.height / 2;
-    
-    // Inverting the direction and making movement more subtle and smoother
-    const rotateXVal = (centerY - y) / 15;
-    const rotateYVal = (x - centerX) / 15;
-    
-    setRotateX(rotateXVal);
-    setRotateY(rotateYVal);
-  };
-  
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
-
   const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
 
   return (
@@ -244,7 +386,7 @@ function App() {
           </DesktopOnly>
           <NavLink href="#pricing">מחיר</NavLink>
           <DesktopOnly>
-            <NavLink href="#contact">הגנת הצרכן</NavLink>
+            <NavLink href="#buy">הגנת הצרכן</NavLink>
           </DesktopOnly>
           <NavLink href="#contact">צור קשר</NavLink>
           <PrimaryButton as="a" href="#buy">
@@ -258,14 +400,15 @@ function App() {
       
       {/* Hero Section */}
       <HeroSection>
-        <BackgroundOverlay />
         <HeroContent>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <HeroTagline>חווית למידה דיגיטלית מהפכנית</HeroTagline>
+            <DesktopOnly>
+              <HeroTagline>חווית למידה דיגיטלית מהפכנית</HeroTagline>
+            </DesktopOnly>
             <HeroTitle>לקרוא גרפים בקלות</HeroTitle>
             <HeroSubtitle>
               <Paragraph>
@@ -302,28 +445,45 @@ function App() {
           </motion.div>
         </HeroContent>
         
+        <BackgroundOverlay />
+        
         <BookShowcase 
+          ref={bookShowcaseRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           <BookCover style={{ 
-            transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)` 
+            transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scaleValue})`,
+            transition: isInteracting ? 'none' : 'transform 0.1s ease-out'
           }}>
           </BookCover>
-          <BookShadow />
+          <DesktopOnly>
+            <BookShadow style={{
+              transform: `perspective(1000px) rotateX(${rotateX*0.5}deg) rotateY(${rotateY*0.5}deg) translateY(130px) scale(${scaleValue})`,
+              opacity: 0.7 - Math.abs(rotateX/100) - Math.abs(rotateY/100) // Shadow changes with rotation
+            }} />
+          </DesktopOnly>
         </BookShowcase>
       </HeroSection>
       
       {/* Features Section */}
-      <SectionTitle id="features">מאפייני הספר</SectionTitle>
+      <DesktopOnly>
+        <SectionTitle id="features">מאפייני הספר</SectionTitle>
+      </DesktopOnly>
       <FeaturesImageContainer>
         <FeaturesImage src={`${process.env.PUBLIC_URL}/images/book_features.jpg`} alt="מאפייני הספר" />
       </FeaturesImageContainer>
       <FeaturesSection ref={featuresRef}>
+        
         <FeatureCard>
-          <FeatureIcon>
-            <StarIcon />
-          </FeatureIcon>
+          <DesktopOnly>
+            <FeatureIcon>
+              <StarIcon />
+            </FeatureIcon>
+          </DesktopOnly>
           <FeatureTitle>דוגמאות אינטראקטיביות</FeatureTitle>
           <FeatureDescription>
             תרגול עם נתונים מהעולם האמיתי ודוגמאות אינטראקטיביות שעוזרות לחזק את ההבנה שלך.
@@ -331,9 +491,11 @@ function App() {
         </FeatureCard>
         
         <FeatureCard>
-          <FeatureIcon>
-            <StarIcon />
-          </FeatureIcon>
+          <DesktopOnly>
+            <FeatureIcon>
+              <StarIcon />
+            </FeatureIcon>
+          </DesktopOnly>
           <FeatureTitle>הדרכה שלב אחר שלב</FeatureTitle>
           <FeatureDescription>
             הוראות ברורות והסברים מפורטים כדי להבטיח שתבין כל מושג.
@@ -341,9 +503,11 @@ function App() {
         </FeatureCard>
         
         <FeatureCard>
-          <FeatureIcon>
-            <StarIcon />
-          </FeatureIcon>
+          <DesktopOnly>
+            <FeatureIcon>
+              <StarIcon />
+            </FeatureIcon>
+          </DesktopOnly>
           <FeatureTitle>כיסוי מקיף</FeatureTitle>
           <FeatureDescription>
             מתרשימי עמודות בסיסיים ועד לויזואליזציות סטטיסטיות מורכבות - אנחנו מכסים הכל.
@@ -606,6 +770,9 @@ const AppContainer = styled.div`
     margin-right: 0;
     margin-left: 8px;
   }
+  @media (max-width: 768px) {
+    --section-width: 90%;
+  }
 `;
 
 const BackgroundAnimation = styled.div`
@@ -654,11 +821,13 @@ const BackgroundOverlay = styled.div`
   opacity: 0.8;
   z-index: 1;
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     width: 100%; /* On mobile, cover the full width */
-    height: 50%; /* But only half the height */
-    top: 50%; /* Move down on mobile */
-    background-size: 150%; /* Larger background image on mobile */
+    height: 45%; /* But only half the height */
+    top: 2%; /* Move to top where the book is now */
+    left: 0;
+    background-size: 130%; /* Larger background image on mobile */
+    z-index: 3; /* Ensure it's behind the book but above other content */
   }
 `;
 
@@ -676,6 +845,11 @@ const Navbar = styled.nav`
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   height: 70px;
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    width: 100%;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -764,11 +938,15 @@ const HeroSection = styled.section`
   padding: 6rem 3rem 4rem;
   overflow: hidden;
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     flex-direction: column;
     text-align: center;
-    gap: 4rem;
-    padding: 4rem 2rem;
+    gap: 3rem;
+    padding: 3rem 1rem;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+  
   }
 `;
 
@@ -782,6 +960,14 @@ const HeroContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
+  @media (max-width: 768px) {
+    order: 2; /* Display SECOND on mobile */
+    padding-left: 0;
+    margin-right: 0;
+    z-index: 4; /* Ensure this is below the book but above other elements */
+    margin-top: 2rem; /* Increased from 0.5rem to move content down */
+  }
 `;
 
 const HeroTagline = styled.div`
@@ -861,11 +1047,14 @@ const BookShowcase = styled.div`
   height: 100%;
   padding: 2rem;
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
+    order: 1; /* Display FIRST on mobile */
     width: 100%;
-    margin-top: 1rem;
-    height: 300px; /* Reduced height */
-    padding: 0.5rem; /* Less padding */
+    margin-top: 2.5rem; /* Increased to move the book down */
+    height: 250px; /* Reduced height */
+    padding: 0; /* Less padding */
+    position: relative;
+    z-index: 10; /* Higher z-index to ensure it's above the background */
   }
 `;
 
@@ -878,8 +1067,9 @@ const BookCover = styled.div`
   transition: transform 0.2s ease-out;
   transform-style: preserve-3d;
   position: relative;
+  z-index: 15; /* Ensure this is above everything else */
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     width: 200px;  /* Smaller width for mobile */
     height: 270px; /* Maintain aspect ratio */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -896,7 +1086,7 @@ const BookShadow = styled.div`
   filter: blur(15px);
   transform: translateY(210px);
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     width: 150px; /* Smaller shadow */
     height: 20px;
     transform: translateY(130px); /* Adjust position */
@@ -907,48 +1097,46 @@ const SectionTitle = styled.h2`
   text-align: center;
   font-size: 2.5rem;
   font-weight: 700;
-  margin: 4rem 0 2rem;
-  color: #333;
-  padding-top: 6rem;
-  margin-top: -2rem;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 3rem;
+  background: linear-gradient(90deg, #ff9800, #ffc107);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  scroll-margin-top: 100px; /* Add scroll margin for navbar */
   
-  &:before {
+  &::after {
     content: '';
     display: block;
-    height: 80px;
-    margin: -80px 0 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #ff9800, #ffc107);
+    margin: 0.5rem auto 0;
     position: relative;
     z-index: -1;
   }
   
   @media (max-width: 768px) {
     font-size: 1.4rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+    scroll-margin-top: 80px; /* Smaller offset for mobile */
   }
 `;
 
 const FeaturesImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2rem auto 3rem;
+  margin: 2rem auto 1rem;
   width: 100%;
   max-width: var(--section-width);
-  padding: 0 2rem;
-  position: relative;
-  overflow: hidden;
+  padding: 2rem;
   
-  &:before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.1));
-    border-radius: 12px;
-    z-index: -1;
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    max-width: none;
   }
 `;
 
@@ -956,14 +1144,19 @@ const FeaturesImage = styled.img`
   width: 100%;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 15px 35px rgba(255, 152, 0, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   object-fit: cover;
   max-height: 400px;
   
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(255, 152, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    border-radius: 0;
+    width: 100%;
   }
 `;
 
@@ -974,6 +1167,16 @@ const FeaturesSection = styled.section`
   padding: 2rem;
   max-width: var(--section-width);
   margin: 0 auto;
+  scroll-margin-top: 100px; /* Add scroll margin for navbar */
+  
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    max-width: none;
+    scroll-margin-top: 80px; /* Smaller offset for mobile */
+  }
 `;
 
 const FeatureCard = styled(motion.div).attrs(() => ({
@@ -991,6 +1194,11 @@ const FeatureCard = styled(motion.div).attrs(() => ({
   &:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(66, 133, 244, 0.15);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+    margin: 0 0 1rem 0;
   }
 `;
 
@@ -1034,12 +1242,29 @@ const TestimonialsSection = styled.section`
   margin: 0 auto;
   padding: 2rem;
   position: relative;
+  scroll-margin-top: 100px; /* Add scroll margin for navbar */
+  
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+    padding: 0;
+    width: 100%;
+    max-width: none;
+    scroll-margin-top: 80px; /* Smaller offset for mobile */
+  }
 `;
 
 const TestimonialsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
   gap: 2rem;
+  overflow-x: auto;
+  padding: 1rem 0 2rem;
+  
+  @media (max-width: 768px) {
+    gap: 1rem;
+    padding: 0.5rem 0 1.5rem;
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const TestimonialPagination = styled.div`
@@ -1064,27 +1289,19 @@ const TestimonialDot = styled.button<{ active: boolean }>`
 `;
 
 const TestimonialCard = styled(motion.div)`
-  background: white;
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  position: relative;
-  overflow: hidden;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 1rem;
+  text-align: left;
+  min-width: 300px;
   
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(66, 133, 244, 0.15);
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, transparent 50%, rgba(255, 152, 0, 0.1) 50%);
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+    margin: 0 0.5rem;
+    min-width: 85vw; /* Almost full width but allows for peek at next */
   }
 `;
 
@@ -1124,13 +1341,21 @@ const TestimonialAuthor = styled.p`
 const PricingSection = styled.section`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
-  padding: 2rem 4rem 4rem;
-  flex-wrap: wrap;
+  margin-bottom: 5rem;
+  padding: 0 2rem;
+  max-width: var(--section-width);
+  margin: 0 auto 5rem;
+  scroll-margin-top: 100px; /* Add scroll margin for navbar */
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    width: 100%;
+    padding: 0;
+    scroll-margin-top: 80px; /* Smaller offset for mobile */
   }
 `;
 
@@ -1144,15 +1369,15 @@ const PricingCard = styled(motion.div).attrs(() => ({
   padding: 3.5rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 550px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  width: 45%; /* Match width of SlideShowCard */
+  height: 100%; /* Match height */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
   
   &::before {
     content: '';
@@ -1162,6 +1387,13 @@ const PricingCard = styled(motion.div).attrs(() => ({
     width: 100%;
     height: 6px;
     background: linear-gradient(90deg, #ff9800, #ffc107);
+  }
+  
+  @media (max-width: 768px) {
+    width: 90%;
+    max-width: 90%;
+    padding: 2rem;
+    height: auto;
   }
 `;
 
@@ -1234,6 +1466,13 @@ const TrustSection = styled.section`
   padding: 5rem 2rem;
   background-color: #f9f9f9;
   text-align: right;
+  width: 100%;
+  scroll-margin-top: 100px; /* Add scroll margin for navbar */
+  
+  @media (max-width: 768px) {
+    padding: 3rem 1rem;
+    scroll-margin-top: 80px; /* Smaller offset for mobile */
+  }
 `;
 
 const TrustIntro = styled.p`
@@ -1307,12 +1546,22 @@ const Footer = styled.footer`
   color: white;
   padding: 3rem 0 1rem;
   text-align: right;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 2rem 0;
+  }
 `;
 
 const FooterContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
 `;
 
 const FooterContent = styled.div`
@@ -1485,9 +1734,12 @@ const SlideShowCard = styled(motion.div).attrs(() => ({
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     margin-top: 2rem;
+    width: 90%;
   }
 `;
 
